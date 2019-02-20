@@ -3,21 +3,22 @@
 namespace app\controller;
 
 use \mxjor\lib\Controller;
+use app\model\index\IndexModel;
 
 /**
  * 主目录
- *
- * @author itaken <regelhh@gmail.com>
- * @since 2019-02-20
  */
 class IndexController extends Controller
 {
     /**
      * 主页
      */
-    public function actionIndex()
-    {
+    public function actionIndex(){
         $this->assign('name', 'Hello World!');
         $this->display();
+    }
+
+    public function actionTest(){
+        p(new IndexModel);
     }
 }

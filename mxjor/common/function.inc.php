@@ -40,3 +40,22 @@ function _pi()
 {
     dump(array_merge($_REQUEST, $_GET, $_POST));
 }
+
+/**
+ * 获取/设置 配置
+ *
+ * @param string $name
+ * @param mixed $value
+ * @return mixed
+ */
+function config($name, $value = null){
+    $mxConfig = $GLOBALS['_MX_CONFIG'];
+    if(is_null($name)){
+        return $mxConfig;
+    }
+    if(is_null($value)){
+        return isset($mxConfig[$name]) ? $mxConfig[$name] : null;
+    }
+    $GLOBALS['_MX_CONFIG'][$name] = $value;
+    return true;
+}
