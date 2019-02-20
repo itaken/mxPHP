@@ -1,0 +1,45 @@
+{
+    "name": "mxPHP",
+    "version": "1.0.0",
+    "description": "an sample PHP framework",
+    "keywords": ["PHP", "Framework", "mxPHP", "itaken"],
+    "type": "Framework",
+    "authors": [
+        {
+            "name": "itaken",
+            "email": "regelhh@gmail.com",
+            "homepage": "https://github.com/itaken",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.8",
+        "filp/whoops": "^2.3",
+        "symfony/var-dumper": "~3.4",
+        "monolog/monolog": "^1.24",
+        "doctrine/orm": "^2.5.14",
+        "catfan/medoo": "~1.6",
+        "twig/twig": "^2.6"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~6.5"
+    },
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "": "mxjor"
+        },
+        "classmap": [
+            "./mxjor"
+        ]
+    },
+    "autoload-dev": {
+        "psr-0": {
+            "": "tests/"
+        }
+    },
+    "license": "MIT",
+    "support": {
+        "email": "regelhh@gmail.com"
+    }
+}
