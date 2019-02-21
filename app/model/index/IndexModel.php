@@ -5,7 +5,7 @@ namespace app\model\index;
 use \app\model\BaseModel;
 
 /**
- * 模型
+ * 示例模型
  */
 class IndexModel extends BaseModel
 {

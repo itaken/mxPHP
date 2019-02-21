@@ -10,6 +10,7 @@ defined('ITAKEN_MX_ROOT') || exit('ERROR: default config unable loaded');
  */
 
 return [
+    // 数据库连接
     'DB_TYPE' => 'mysqli',
     'DB_NAME' => '',
     'DB_HOST' => 'localhost',
@@ -19,4 +20,11 @@ return [
     'TBL_PREFIX' => '', // 表前缀
     'TBL_SUFFIX' => '_tbl', // 表后缀
     'TBL_SPLIT' => '_', // 表名称分割符
+
+    // TODO::Mongo 连接
+
+    // TODO::redis 连接
+
+    // TODO::memcache 连接
+
 ];
