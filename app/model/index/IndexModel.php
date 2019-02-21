@@ -9,10 +9,9 @@ use \app\model\BaseModel;
  */
 class IndexModel extends BaseModel
 {
+
     /**
-     * 初始化
+     * @var string 表名
      */
-    public function __construct(){
-        parent::__construct();
-    }
+    protected $tblName = 'url_tbl';
 }

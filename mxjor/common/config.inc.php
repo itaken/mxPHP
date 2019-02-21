@@ -15,14 +15,15 @@ $config = [
     'DB_PORT' => '',
     'DB_USER' => '',
     'DB_PASSWD' => '',
-    'TBL_PREFIX' => '',
-    'TBL_SUFFIX' => '',
+    'TBL_PREFIX' => '', // 表前缀
+    'TBL_SUFFIX' => '', // 表后缀
+    'TBL_SPLIT' => '_', // 表名称分割符
 ];
 
 // 获取用户配置
 $userConfig = [];
 $userConfigFile = ITAKEN_MX_ROOT . '/app/config/default.inc.php';
-if(file_exists($userConfigFile)){
+if (file_exists($userConfigFile)) {
     $userConfig = include($userConfigFile) ?: [];
 }
 

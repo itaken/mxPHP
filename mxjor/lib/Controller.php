@@ -19,12 +19,12 @@ abstract class Controller
     /**
      * @var array 数据
      */
-    private $_data = [];
+    private $mxData = [];
 
     /**
      * @var object Twig
      */
-    private $twig;
+    private $mxTwig;
 
     /**
      * 初始化
@@ -33,7 +33,7 @@ abstract class Controller
     {
         // 加载模板引擎
         $loader = new \Twig\Loader\FilesystemLoader(ITAKEN_MX_TPL);
-        $this->twig = new \Twig\Environment($loader, [
+        $this->mxTwig = new \Twig\Environment($loader, [
             // 'cache' => ITAKEN_MX_CACHE,  // 缓存
             'debug' => ITAKEN_MX_DEBUG,  // 调试选项
         ]);
@@ -50,7 +50,7 @@ abstract class Controller
      */
     public function assign(string $name, $data): void
     {
-        $this->_data[$name] = $data;
+        $this->mxData[$name] = $data;
     }
 
     /**
@@ -67,7 +67,7 @@ abstract class Controller
         } elseif (strrpos($file, '.html') !== 0) {
             $file .= '.html';
         }
-        $this->twig->display($file, $this->_data);  // 输出模板
-        $this->_data = [];  // 清空数据
+        $this->mxTwig->display($file, $this->mxData);  // 输出模板
+        $this->mxData = [];  // 清空数据
     }
 }

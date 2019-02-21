@@ -3,7 +3,8 @@
 .project
 .settings
 
-_skins_tmp
+/_skins_tmp/
+/*/cache/
 
 GPATH
 GRTAGS

@@ -44,8 +44,9 @@ class MxPHP
 
     /**
      * 注册 whoops
-     *
      * @see https://github.com/filp/whoops
+     *
+     * @return void
      */
     private static function mxWhoops(): void
     {
@@ -55,7 +56,9 @@ class MxPHP
     }
 
     /**
-     * 定义 常亮
+     * 定义 常量
+     *
+     * @return void
      */
     private static function mxDefine(): void
     {
@@ -71,6 +74,8 @@ class MxPHP
 
     /**
      * 加载文件
+     *
+     * @return void
      */
     private static function mxRequire(): void
     {
@@ -84,6 +89,8 @@ class MxPHP
 
     /**
      * 加载类库
+     *
+     * @return void
      */
     private static function mxLoad():void
     {

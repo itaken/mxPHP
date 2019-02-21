@@ -48,12 +48,13 @@ function _pi()
  * @param mixed $value
  * @return mixed
  */
-function config($name, $value = null){
+function config($name, $value = null)
+{
     $mxConfig = $GLOBALS['_MX_CONFIG'];
-    if(is_null($name)){
+    if (is_null($name)) {
         return $mxConfig;
     }
-    if(is_null($value)){
+    if (is_null($value)) {
         return isset($mxConfig[$name]) ? $mxConfig[$name] : null;
     }
     $GLOBALS['_MX_CONFIG'][$name] = $value;
