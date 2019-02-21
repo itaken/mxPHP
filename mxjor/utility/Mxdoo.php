@@ -54,7 +54,7 @@ class Mxdoo
             $this->packDbConfig($dbConfig);
             // 构建对象
             if ($this->mxMedooConfig) {
-                self::$mxMedooMap[$dbName]  = (new Medoo($this->mxMedooConfig));
+                $this->mxMedoo = self::$mxMedooMap[$dbName]  = (new Medoo($this->mxMedooConfig));
             }
         } else {
             $this->mxMedoo = self::$mxMedooMap[$dbName]; // medoo 对象
