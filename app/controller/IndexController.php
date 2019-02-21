@@ -4,7 +4,6 @@ namespace app\controller;
 
 use \mxjor\lib\Controller;
 use app\model\index\IndexModel;
-use app\model\index\UrlModel;
 
 /**
  * 主目录
@@ -20,11 +19,13 @@ class IndexController extends Controller
         $this->display();
     }
 
+    /**
+     * 调试
+     *
+     * @return void
+     */
     public function actionTest()
     {
         p(new IndexModel);
-        p(new IndexModel);
-        p(new IndexModel);
-        p(new UrlModel);
     }
 }

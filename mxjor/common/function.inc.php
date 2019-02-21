@@ -17,6 +17,13 @@ defined('ITAKEN_MX_ROOT') || exit('ERROR: functions not included!');
 function p(...$args)
 {
     foreach ($args as $arg) {
+        if (ITAKEN_MX_DEBUG) {
+            // fix json-handle plugin bug
+            if (empty($arg) && is_array($arg)) {
+                var_dump($arg);
+                continue;
+            }
+        }
         dump($arg);
     }
 }
