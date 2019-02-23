@@ -79,12 +79,12 @@ class MxPHP
      */
     private static function mxRequire(): void
     {
+        // 获取配置
+        require(ITAKEN_MX_DIR . 'common/config.inc.php');
         // 公共方法
         require(ITAKEN_MX_DIR . 'common/function.inc.php');
         // 路由
         require(ITAKEN_MX_DIR . 'routes/Route.php');
-        // 获取配置
-        require(ITAKEN_MX_DIR . 'common/config.inc.php');
     }
 
     /**

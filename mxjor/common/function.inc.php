@@ -6,7 +6,7 @@
  * @author itaken<regelhh@gmail.com>
  * @since 2019-02-17
  */
-defined('ITAKEN_MX_ROOT') || exit('ERROR: functions not included!');
+defined('ITAKEN_MX_ROOT') || exit('ERROR: Functions dose not included!');
 
  /**
   * 重写输出
