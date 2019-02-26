@@ -6,7 +6,7 @@
  * @author itaken<regelhh@gmail.com>
  * @since 2019-02-17
  */
-// ini_set('display_error', 'On');
+// ini_set('display_errors', 'On');
 define('ITAKEN_MX_DEBUG', true);
 define('ITAKEN_MX_ROOT', dirname(__DIR__) . '/');
 require(ITAKEN_MX_ROOT . 'vendor/autoload.php');
