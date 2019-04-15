@@ -34,10 +34,10 @@ class Route
     public function __construct(string $module)
     {
         // 模块
-        $this->module = $module;
+        $this->module = $module ?: 'app';
         // 解析 路由
         $uri = filter_input(INPUT_SERVER, 'REQUEST_URI');
-        $paths = \explode('/', trim($uri, '/'));
+        $paths = $uri ? \explode('/', trim($uri, '/')) : [];
         $controller = isset($paths[0]) ? \strtolower(trim($paths[0])) : 'index';
         $action = isset($paths[1]) ? strtolower(trim($paths[1])) : 'index';
 
@@ -76,11 +76,11 @@ class Route
         $controller = $this->controller;
         $action = $this->action;
         $controllerName = \ucfirst($controller);
-        $controllerClass = "\\{$module}\controller\\{$controllerName}Controller";
+        $controllerClass = "\\{$module}\controller\\{$controllerName}Controller";   // 完整类名
         $controllerFile = ITAKEN_MX_ROOT . str_replace('\\', '/', $controllerClass) . '.php';
         if (file_exists($controllerFile)) {
             include($controllerFile);
-            $actionName = 'action' . \ucfirst($action);
+            $actionName = 'action' . \ucfirst($action); // 方法名称
             (new $controllerClass)->$actionName();
         }
     }

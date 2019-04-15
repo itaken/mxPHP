@@ -2,6 +2,7 @@
 
 namespace mxjor;
 
+defined('ITAKEN_MX_DEBUG') || define('ITAKEN_MX_DEBUG', false);
 defined('ITAKEN_MX_ROOT') || define('ITAKEN_MX_ROOT', dirname(__DIR__) . '/');
 
 /**
@@ -30,14 +31,16 @@ class MxPHP
      */
     public static function run(string $module = 'app')
     {
-        self::mxWhoops();   // 加载错误调试库
+        if(true === ITAKEN_MX_DEBUG){
+            self::mxWhoops();   // 加载错误调试库
+        }
         
         self::$module = $module;
 
         self::mxDefine();   // 定义常量
         self::mxLoad();     // 自动加载
         self::mxRequire();  // 引入文件
-
+        
         // 加载路由
         (new \mxjor\routes\Route($module))->load();
     }
