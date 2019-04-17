@@ -49,15 +49,18 @@ class Mxdoo
         $this->dbName = $dbName;
         
         // 初始化对象
-        if (!isset(self::$mxMedooMap[$dbName])) {
-            // 组装配置项
-            $this->packDbConfig($dbConfig);
-            // 构建对象
-            if ($this->mxMedooConfig) {
-                $this->mxMedoo = self::$mxMedooMap[$dbName]  = (new Medoo($this->mxMedooConfig));
+        if (!empty($dbName)) {
+            if (!isset(self::$mxMedooMap[$dbName])) {
+                // 组装配置项
+                $this->packDbConfig($dbConfig);
+                p($this->mxMedooConfig);
+                // 构建对象
+                if ($this->mxMedooConfig) {
+                    $this->mxMedoo = self::$mxMedooMap[$dbName]  = (new Medoo($this->mxMedooConfig));
+                }
+            } else {
+                $this->mxMedoo = self::$mxMedooMap[$dbName]; // medoo 对象
             }
-        } else {
-            $this->mxMedoo = self::$mxMedooMap[$dbName]; // medoo 对象
         }
     }
 

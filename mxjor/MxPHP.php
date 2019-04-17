@@ -97,7 +97,7 @@ class MxPHP
      */
     private static function mxLoad():void
     {
-        $classMap = self::$classMap;
+        $classMap = &self::$classMap;
         \spl_autoload_register(function ($name) use (&$classMap) {
             if (!isset($classMap[$name])) {
                 $class = str_replace('\\', '/', $name);

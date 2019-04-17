@@ -2,7 +2,7 @@
 
 namespace app\model;
 
-use \mxjor\lib\Model;
+use \mxjor\library\Model;
 
 /**
  * 基类

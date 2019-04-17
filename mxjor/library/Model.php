@@ -1,6 +1,6 @@
 <?php
 
-namespace mxjor\lib;
+namespace mxjor\library;
 
 use \mxjor\utility\Mxdoo;
 
@@ -13,7 +13,7 @@ use \mxjor\utility\Mxdoo;
 abstract class Model extends Mxdoo
 {
     /**
-     * @var array
+     * @var array 类集
      */
     private static $mxClassMap = [];
 

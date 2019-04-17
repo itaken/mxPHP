@@ -14,17 +14,17 @@ class Route
     /**
      * @var string 模块
      */
-    public $module;
+    private $module;
 
     /**
      * @var string 控制器
      */
-    public $controller;
+    private $controller;
 
     /**
      * @var string 方法
      */
-    public $action;
+    private $action;
 
     /**
      * 构造器
@@ -36,14 +36,13 @@ class Route
         // 模块
         $this->module = $module ?: 'app';
         // 解析 路由
-        $uri = filter_input(INPUT_SERVER, 'REQUEST_URI');
+        $uri = filter_input(INPUT_SERVER, 'REQUEST_URI') ?: $_SERVER['REQUEST_URI'];
         $paths = $uri ? \explode('/', trim($uri, '/')) : [];
-        $controller = isset($paths[0]) ? \strtolower(trim($paths[0])) : 'index';
-        $action = isset($paths[1]) ? strtolower(trim($paths[1])) : 'index';
-
+        $controller = !empty($paths[0]) ? \strtolower(trim($paths[0])) : 'index';
+        $action = !empty($paths[1]) ? strtolower(trim($paths[1])) : 'index';
         $this->controller = $controller;
         $this->action = $action;
-
+        
         // 全局变量
         $GLOBALS['_controller'] = $controller;
         $GLOBALS['_action'] = $action;

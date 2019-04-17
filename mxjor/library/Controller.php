@@ -1,6 +1,6 @@
 <?php
 
-namespace mxjor\lib;
+namespace mxjor\library;
 
 /**
  * 控制器 原始类
@@ -48,7 +48,7 @@ abstract class Controller
      * @param mixed $data
      * @return void
      */
-    public function assign(string $name, $data): void
+    protected function assign(string $name, $data): void
     {
         $this->mxData[$name] = $data;
     }
@@ -60,7 +60,7 @@ abstract class Controller
      * @param string $file
      * @return void
      */
-    public function display(string $file = ''): void
+    protected function display(string $file = ''): void
     {
         if (empty($file)) {
             $file = $GLOBALS['_controller'] . '/' . $GLOBALS['_action'] . '.html';
