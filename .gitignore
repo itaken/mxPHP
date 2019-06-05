@@ -19,3 +19,5 @@ GTAGS
 /vendor/
 /reports/
 /nbproject/
+
+/*.code-workspace

@@ -2,6 +2,8 @@
 
 namespace mxjor\routes;
 
+use mxjor\MxPHP;
+
 /**
  * 路由类
  *
@@ -17,70 +19,94 @@ class Route
     private $module;
 
     /**
+     * @var string 层级目录
+     */
+    private $catalog = '';
+
+    /**
      * @var string 控制器
      */
-    private $controller;
+    private $controller = 'index';
 
     /**
      * @var string 方法
      */
-    private $action;
+    private $action = 'index';
 
     /**
      * 构造器
      *
      * @param string $module
+     * @return void
      */
     public function __construct(string $module)
     {
         // 模块
         $this->module = $module ?: 'app';
+
         // 解析 路由
         $uri = filter_input(INPUT_SERVER, 'REQUEST_URI') ?: $_SERVER['REQUEST_URI'];
-        $paths = $uri ? \explode('/', trim($uri, '/')) : [];
-        $controller = !empty($paths[0]) ? \strtolower(trim($paths[0])) : 'index';
-        $action = !empty($paths[1]) ? strtolower(trim($paths[1])) : 'index';
-        $this->controller = $controller;
-        $this->action = $action;
-        
-        // 全局变量
-        $GLOBALS['_controller'] = $controller;
-        $GLOBALS['_action'] = $action;
-
-        // 解析参数
-        $num = count($paths);
-        if ($num > 2) {
-            for ($i =2; $i < $num; $i +=2) {
-                if (!isset($paths[$i + 1])) {
-                    continue;
-                }
-                $name = $paths[$i];
-                if (empty($name) || is_numeric($name)) {
-                    continue;
-                }
-                $value = $paths[$i + 1];
-                $_GET[$name] = $value;
+        $uri = strpos($uri, '?') !== false ? strstr($uri, '?', true) : $uri;
+        $pathsArr = trim($uri, '/') ? \explode('/', trim($uri, '/')) : [];
+        $pathNum = count($pathsArr);
+        $catalogArr = [];
+        $controller = $action = '';
+        for ($i = 0; $i < $pathNum; $i ++) {
+            $_name = \strtolower(trim($pathsArr[$i]));
+            if (!\preg_match('/[a-zA-z]+(\w-)*/', $_name)) {
+                throw new \Exception('没有该页面!', 404);
             }
+            if ($i == $pathNum - 1) {
+                $action = $_name;
+                continue;
+            } elseif ($i == $pathNum -2) {
+                $controller = $_name;
+                continue;
+            }
+            $catalogArr[] = $_name;
         }
+        $catalogArr && $this->catalog = implode('\\', $catalogArr);
+        $controller && $this->controller = $action ? $controller : $action;
+        $action && $this->action = $action;
     }
 
     /**
      * 加载路由
      *
-     * @return void
+     * @return mixed
      */
-    public function load(): void
+    public function load()
     {
         $module = $this->module;
+        $catalog = $this->catalog;
         $controller = $this->controller;
         $action = $this->action;
+        
+        // 组装命名空间
+        $namespace = "{$module}\controller\\{$catalog}";
+        
+        // 组装完整 类名
         $controllerName = \ucfirst($controller);
-        $controllerClass = "\\{$module}\controller\\{$controllerName}Controller";   // 完整类名
-        $controllerFile = ITAKEN_MX_ROOT . str_replace('\\', '/', $controllerClass) . '.php';
-        if (file_exists($controllerFile)) {
-            include($controllerFile);
-            $actionName = 'action' . \ucfirst($action); // 方法名称
-            (new $controllerClass)->$actionName();
+        $controllerPath = "{$namespace}\\{$controllerName}Controller";
+        $controllerClass = \str_replace('\\\\', '\\', $controllerPath);
+        
+        $actionName = 'action' . \ucfirst($action); // 方法名称
+
+        // 判断是否有该方法
+        if (!method_exists($controllerClass, $actionName)) {
+            throw new \Exception('没有该页面', 404);
         }
+        
+        // 作用域参数回传
+        MxPHP::setScopeParams([
+            'module' => $module,
+            'controller' => $controllerClass,
+            'action' => $actionName,
+            'viewPath' => "{$catalog}/{$controller}/{$action}",
+        ]);
+
+        // 调起类方法
+        return \call_user_func([new $controllerClass, $actionName]);
     }
+
 }

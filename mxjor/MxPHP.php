@@ -2,11 +2,13 @@
 
 namespace mxjor;
 
+use mxjor\routes\Route;
+
 defined('ITAKEN_MX_DEBUG') || define('ITAKEN_MX_DEBUG', false);
 defined('ITAKEN_MX_ROOT') || define('ITAKEN_MX_ROOT', dirname(__DIR__) . '/');
 
 /**
- * 框架
+ * 框架主入口
  *
  * @author itaken<regelhh@gmail.com>
  * @since 2019-02-17
@@ -25,24 +27,28 @@ class MxPHP
     private static $module = null;
 
     /**
+     * @var array 作用域参数
+     */
+    private static $scopeParams = [];
+
+    /**
      * 启动入口
      *
      * @param string $module 模块
+     * @return mixed
      */
     public static function run(string $module = 'app')
     {
-        if(true === ITAKEN_MX_DEBUG){
-            self::mxWhoops();   // 加载错误调试库
-        }
-        
         self::$module = $module;
-
+        
+        self::mxWhoops();   // 加载错误调试
         self::mxDefine();   // 定义常量
         self::mxLoad();     // 自动加载
         self::mxRequire();  // 引入文件
+        self::mxHandler();  // 捕获异常
         
         // 加载路由
-        (new \mxjor\routes\Route($module))->load();
+        return (new Route($module))->load();
     }
 
     /**
@@ -53,9 +59,17 @@ class MxPHP
      */
     private static function mxWhoops(): void
     {
-        $whoops = new \Whoops\Run;
-        $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
-        $whoops->register();
+        if (true === ITAKEN_MX_DEBUG) { // 开启调试模式
+            ini_set('display_errors', 'On');
+            error_reporting(E_ALL);
+
+            // 加载调试类库
+            if (class_exists('Whoops\Run')) {
+                $whoops = new \Whoops\Run;
+                $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+                $whoops->register();
+            }
+        }
     }
 
     /**
@@ -65,8 +79,6 @@ class MxPHP
      */
     private static function mxDefine(): void
     {
-        // 调试
-        \defined('ITAKEN_MX_DEBUG') || define('ITAKEN_MX_DEBUG', false);
         // 框架目录
         \define('ITAKEN_MX_DIR', ITAKEN_MX_ROOT . 'mxjor/');
         // TWIG 模板目录
@@ -100,13 +112,46 @@ class MxPHP
         $classMap = &self::$classMap;
         \spl_autoload_register(function ($name) use (&$classMap) {
             if (!isset($classMap[$name])) {
-                $class = str_replace('\\', '/', $name);
+                $class = str_replace(['\\', '//'], '/', $name);
                 $file = ITAKEN_MX_ROOT . $class . '.php';
                 if (file_exists($file)) {
                     include($file);
-                    $classMap[$name] = $file;
                 }
+                $classMap[$name] = $file;
             }
         });
+    }
+
+    /**
+     * 捕获异常
+     *
+     * @return void
+     */
+    private static function mxHandler(): void
+    {
+        \set_exception_handler(function ($e) {
+            // TODO:: 异常页面
+            echo $e->getMessage();
+        });
+    }
+
+    /**
+     * 获取作用域参数
+     *
+     * @param array
+     */
+    public static function setScopeParams(array $scopeParams): void
+    {
+        self::$scopeParams = $scopeParams;
+    }
+
+    /**
+     * 获取作用域参数
+     *
+     * @return array
+     */
+    public static function getScopeParams(): array
+    {
+        return self::$scopeParams ?: [];
     }
 }

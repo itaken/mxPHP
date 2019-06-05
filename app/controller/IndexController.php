@@ -2,7 +2,7 @@
 
 namespace app\controller;
 
-use \mxjor\library\Controller;
+use mxjor\library\Controller;
 use app\model\index\IndexModel;
 
 /**

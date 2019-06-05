@@ -2,6 +2,8 @@
 
 namespace mxjor\library;
 
+use mxjor\MxPHP;
+
 /**
  * 控制器 原始类
  *
@@ -29,7 +31,7 @@ abstract class Controller
     /**
      * 初始化
      */
-    public function __construct()
+    public function __construct(...$args)
     {
         // 加载模板引擎
         $loader = new \Twig\Loader\FilesystemLoader(ITAKEN_MX_TPL);
@@ -63,7 +65,8 @@ abstract class Controller
     protected function display(string $file = ''): void
     {
         if (empty($file)) {
-            $file = $GLOBALS['_controller'] . '/' . $GLOBALS['_action'] . '.html';
+            $params = MxPHP::getScopeParams();  // 作用域
+            $file = $params['viewPath'] . '.html';
         } elseif (strrpos($file, '.html') !== 0) {
             $file .= '.html';
         }
