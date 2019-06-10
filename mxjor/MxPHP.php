@@ -17,14 +17,19 @@ defined('ITAKEN_MX_ROOT') || define('ITAKEN_MX_ROOT', dirname(__DIR__) . '/');
 class MxPHP
 {
     /**
-     * @var array 类库
-     */
-    private static $classMap = [];
-
-    /**
      * @var string 模块
      */
     private static $module = null;
+    
+    /**
+     * @var array 类库
+     */
+    private static $config = [];
+
+    /**
+     * @var array 类库
+     */
+    private static $classMap = [];
 
     /**
      * @var array 作用域参数
@@ -81,10 +86,12 @@ class MxPHP
     {
         // 框架目录
         \define('ITAKEN_MX_DIR', ITAKEN_MX_ROOT . 'mxjor/');
+        // 模块目录
+        \define('ITAKEN_MX_MODULE', ITAKEN_MX_ROOT . self::$module . '/');
         // TWIG 模板目录
-        \define('ITAKEN_MX_TPL', ITAKEN_MX_ROOT . self::$module . '/views/');
+        \define('ITAKEN_MX_TPL', ITAKEN_MX_MODULE . 'views/');
         // TWIG 缓存目录
-        \define('ITAKEN_MX_CACHE', ITAKEN_MX_ROOT . self::$module . '/cache/');
+        \define('ITAKEN_MX_CACHE', ITAKEN_MX_MODULE . 'cache/');
     }
 
     /**
@@ -136,17 +143,53 @@ class MxPHP
     }
 
     /**
-     * 获取作用域参数
+     * 获取 配置
      *
      * @param array
+     * @return void
      */
-    public static function setScopeParams(array $scopeParams): void
+    public static function setConfig(array $config): void
     {
-        self::$scopeParams = $scopeParams;
+        if (!empty($config)) {
+            self::$config = array_merge(self::$config, $config);
+        }
     }
 
     /**
-     * 获取作用域参数
+     * 获取/设置 配置
+     *
+     * @param string $name
+     * @param mixed $value
+     * @return mixed
+     */
+    public static function config($name, $value = null)
+    {
+        $mxConfig = self::$config;
+        if (is_null($name)) {
+            return $mxConfig;
+        }
+        if (is_null($value)) {
+            return isset($mxConfig[$name]) ? $mxConfig[$name] : null;
+        }
+        self::setConfig([$name => $value ]);
+        return true;
+    }
+
+    /**
+     * 获取 作用域参数
+     *
+     * @param array
+     * @return void
+     */
+    public static function setScopeParams(array $scopeParams): void
+    {
+        if (!empty($scopeParams)) {
+            self::$scopeParams = $scopeParams;
+        }
+    }
+
+    /**
+     * 获取 作用域参数
      *
      * @return array
      */

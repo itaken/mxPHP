@@ -1,6 +1,8 @@
 <?php
 
-defined('ITAKEN_MX_ROOT') || exit('ERROR: Framework config unable loaded!');
+defined('ITAKEN_MX_MODULE') || exit('ERROR: Framework config unable loaded!');
+
+use mxjor\MxPHP;
 
 /**
  * 获取配置
@@ -17,18 +19,15 @@ $config = [
     'DB_PASSWD' => '',
     'TBL_PREFIX' => '', // 表前缀
     'TBL_SUFFIX' => '', // 表后缀
-    'TBL_SPLIT' => '', // 表名称分割符(为空,则使用驼峰)
+    'TBL_SPLIT' => '',  // 表名称分割符(为空,则使用驼峰)
 ];
 
 // 获取用户配置
 $userConfig = [];
-$userConfigFile = ITAKEN_MX_ROOT . '/app/config/default.inc.php';
+$userConfigFile = ITAKEN_MX_MODULE . 'config/default.inc.php';
 if (file_exists($userConfigFile)) {
     $userConfig = include($userConfigFile) ?: [];
 }
 
 // 返回配置
-$mxConfig = array_merge($config, $userConfig);
-$GLOBALS['_MX_CONFIG'] = $mxConfig;
-
-return $mxConfig;
+MxPHP::setConfig(array_merge($config, $userConfig));

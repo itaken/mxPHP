@@ -44,7 +44,7 @@ class Mxdoo
      */
     public function __construct()
     {
-        $dbConfig = config(null);  // 获取配置
+        $dbConfig = MxPHP::config(null);  // 获取配置
         $dbName = $this->dbName ?: $dbConfig['DB_NAME'];  // 数据库名称
         $this->dbName = $dbName;
         

@@ -2,7 +2,8 @@
 
 namespace mxjor\library;
 
-use \mxjor\utility\Mxdoo;
+use mxjor\MxPHP;
+use mxjor\utility\Mxdoo;
 
 /**
  * 模型 原始类
@@ -41,7 +42,7 @@ abstract class Model extends Mxdoo
     {
         if (empty($this->tblName)) {
             $modelEpl = explode('\\', $clsName);  // 分割调用类
-            if ('_' === config('TBL_SPLIT')) {
+            if ('_' === MxPHP::config('TBL_SPLIT')) {
                 $modelSplit = preg_split('/(?=[A-Z])/', end($modelEpl));
                 $tblNameArr = [];
                 foreach ($modelSplit as $split) {
@@ -55,7 +56,7 @@ abstract class Model extends Mxdoo
                 $tblName = str_replace('Model', '', end($modelEpl));
             }
             // 组装 表名称
-            $this->tblName = \config('TBL_PREFIX') . $tblName . \config('TBL_SUFFIX');
+            $this->tblName = MxPHP::config('TBL_PREFIX') . $tblName . MxPHP::config('TBL_SUFFIX');
         }
         self::$mxClassMap[$clsName] = $this->tblName;
     }

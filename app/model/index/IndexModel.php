@@ -2,7 +2,7 @@
 
 namespace app\model\index;
 
-use \app\model\BaseModel;
+use app\model\BaseModel;
 
 /**
  * 示例模型
