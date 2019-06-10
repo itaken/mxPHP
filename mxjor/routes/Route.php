@@ -3,6 +3,7 @@
 namespace mxjor\routes;
 
 use mxjor\MxPHP;
+use mxjor\exception\MxException;
 
 /**
  * 路由类
@@ -82,19 +83,20 @@ class Route
         $controller = $this->controller;
         $action = $this->action;
         
-        // 组装命名空间
+        // 组装 命名空间
         $namespace = "{$module}\controller\\{$catalog}";
         
-        // 组装完整 类名
+        // 组装 完整类名
         $controllerName = \ucfirst($controller);
         $controllerPath = "{$namespace}\\{$controllerName}Controller";
         $controllerClass = \str_replace('\\\\', '\\', $controllerPath);
         
+        // 组装 方法名
         $actionName = 'action' . \ucfirst($action); // 方法名称
 
         // 判断是否有该方法
         if (!method_exists($controllerClass, $actionName)) {
-            throw new \Exception('没有该页面', 404);
+            throw new MxException('没有该页面', 404);
         }
         
         // 作用域参数回传

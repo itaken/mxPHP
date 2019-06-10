@@ -1,0 +1,20 @@
+User-agent: googlebot-image
+Disallow: /
+User-agent: yahoo-mmcrawler
+Disallow: /
+User-agent: psbot
+Disallow: /
+User-agent: *
+Disallow: 
+Disallow: /api/
+Disallow: /admin/
+Disallow: /js/
+Disallow: /css/
+Disallow: /static/
+Disallow: /public/
+Disallow: /img/
+Disallow: /imgs/
+Disallow: /images/
+Disallow: /tmp/
+Disallow: /?
+Disallow: /install/

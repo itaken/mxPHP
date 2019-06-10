@@ -4,6 +4,7 @@ namespace mxjor\utility;
 
 use Medoo\Medoo;
 use mxjor\MxPHP;
+use mxjor\exception\MxException;
 
 /**
  * 数据库 工具类
@@ -96,7 +97,7 @@ class Mxdoo
     {
         $medoo = $this->mxMedoo;
         if (empty($medoo)) {
-            throw new \Exception('Medoo Unconnected Database!');
+            throw new MxException('Medoo Unconnected Database!', 500);
         }
         return $medoo;
     }
@@ -202,6 +203,16 @@ class Mxdoo
             return 0;
         }
         $this->getMedoo()->insert($this->tblName, $data);
+        return $this->getLastInsID();
+    }
+
+    /**
+     * 获取 最后插入的ID
+     *
+     * @return integer
+     */
+    protected function getLastInsID(): int
+    {
         return $this->getMedoo()->id();
     }
 
@@ -284,6 +295,16 @@ class Mxdoo
             }
         }
         return $this->getMedoo()->select($this->tblName, $fields, $where);
+    }
+
+    /**
+     * 获取 影响行数
+     *
+     * @return integer
+     */
+    protected function getAffectedRow(): int
+    {
+        return $this->getMedoo()->rowCount();
     }
 
     /**
