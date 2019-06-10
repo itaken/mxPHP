@@ -26,6 +26,6 @@ class IndexController extends Controller
      */
     public function actionTest()
     {
-        p(new IndexModel);
+        p(__METHOD__, (new IndexModel)->test());
     }
 }

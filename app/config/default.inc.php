@@ -12,10 +12,10 @@ defined('ITAKEN_MX_ROOT') || exit('ERROR: default config unable loaded');
 return [
     // 数据库连接
     'DB_TYPE' => 'mysqli',
-    'DB_NAME' => '',
+    'DB_NAME' => 'mysql',
     'DB_HOST' => 'localhost',
     'DB_PORT' => '3306',
-    'DB_USER' => 'root',
+    'DB_USER' => 'mxPHP',
     'DB_PASSWD' => '',
     'TBL_PREFIX' => '', // 表前缀
     'TBL_SUFFIX' => '_tbl', // 表后缀

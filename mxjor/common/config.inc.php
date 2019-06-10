@@ -30,4 +30,4 @@ if (file_exists($userConfigFile)) {
 }
 
 // 返回配置
-MxPHP::setConfig(array_merge($config, $userConfig));
+MxPHP::config(array_merge($config, $userConfig));

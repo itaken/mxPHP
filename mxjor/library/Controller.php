@@ -31,7 +31,7 @@ abstract class Controller
     /**
      * 初始化
      */
-    public function __construct(...$args)
+    public function __construct()
     {
         // 加载模板引擎
         $loader = new \Twig\Loader\FilesystemLoader(ITAKEN_MX_TPL);
@@ -59,10 +59,11 @@ abstract class Controller
      * 输出视图
      * @see https://github.com/twigphp/Twig
      *
+     * @param array $data
      * @param string $file
      * @return void
      */
-    protected function display(string $file = ''): void
+    protected function display(array $data = [], string $file = ''): void
     {
         if (empty($file)) {
             $params = MxPHP::getScopeParams();  // 作用域
@@ -70,7 +71,7 @@ abstract class Controller
         } elseif (strrpos($file, '.html') !== 0) {
             $file .= '.html';
         }
-        $this->mxTwig->display($file, $this->mxData);  // 输出模板
+        $this->mxTwig->display($file, array_merge($this->mxData, $data));  // 输出模板
         $this->mxData = [];  // 清空数据
     }
 }

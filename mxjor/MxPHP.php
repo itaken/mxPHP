@@ -143,22 +143,9 @@ class MxPHP
     }
 
     /**
-     * 获取 配置
-     *
-     * @param array
-     * @return void
-     */
-    public static function setConfig(array $config): void
-    {
-        if (!empty($config)) {
-            self::$config = array_merge(self::$config, $config);
-        }
-    }
-
-    /**
      * 获取/设置 配置
      *
-     * @param string $name
+     * @param string|null|array $name
      * @param mixed $value
      * @return mixed
      */
@@ -168,10 +155,17 @@ class MxPHP
         if (is_null($name)) {
             return $mxConfig;
         }
-        if (is_null($value)) {
-            return isset($mxConfig[$name]) ? $mxConfig[$name] : null;
+        if ('' === $name || false === $name) {
+            return false;
         }
-        self::setConfig([$name => $value ]);
+        if (is_array($name)) {
+            self::$config = array_merge($mxConfig, $name);
+            return true;
+        }
+        if (is_null($value)) {
+            return $mxConfig[$name] ?: null;
+        }
+        self::$config[$name] = $value;
         return true;
     }
 

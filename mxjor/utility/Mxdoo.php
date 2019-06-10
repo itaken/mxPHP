@@ -2,7 +2,8 @@
 
 namespace mxjor\utility;
 
-use \Medoo\Medoo;
+use Medoo\Medoo;
+use mxjor\MxPHP;
 
 /**
  * 数据库 工具类
@@ -53,7 +54,6 @@ class Mxdoo
             if (!isset(self::$mxMedooMap[$dbName])) {
                 // 组装配置项
                 $this->packDbConfig($dbConfig);
-                p($this->mxMedooConfig);
                 // 构建对象
                 if ($this->mxMedooConfig) {
                     $this->mxMedoo = self::$mxMedooMap[$dbName]  = (new Medoo($this->mxMedooConfig));
@@ -163,6 +163,16 @@ class Mxdoo
     }
 
     /**
+     * 获取原始SQL
+     *
+     * @return string
+     */
+    protected function getRawSql(): string
+    {
+        return $this->getLastSql();
+    }
+
+    /**
      * 获取错误信息
      *
      * @return array
@@ -242,10 +252,10 @@ class Mxdoo
      * 获取列
      * @see https://medoo.in/api/select
      *
-     * @param array $where
-     * @param string $fields
-     * @param string $orderBy
-     * @param string $limit
+     * @param array $where 例如: ['id' => 1 ]
+     * @param string $fields 例如: id,name
+     * @param string $orderBy 例如: id DESC
+     * @param string $limit  例如: 1,100 或者 100
      * @return array
      */
     protected function getList(array $where, $fields = '*', string $orderBy = '', string $limit = ''): array
