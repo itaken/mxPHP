@@ -43,7 +43,7 @@ abstract class Model extends Mxdoo
         if (empty($this->tblName)) {
             $modelEpl = explode('\\', $clsName);  // 分割调用类
             if ('_' === MxPHP::config('TBL_SPLIT')) {
-                $modelSplit = preg_split('/(?=[A-Z])/', end($modelEpl));
+                $modelSplit = preg_split('/(?=[A-Z])/', end($modelEpl)); // 分割model名
                 $tblNameArr = [];
                 foreach ($modelSplit as $split) {
                     if (empty($split) || in_array($split, ['model', 'Model'])) {

@@ -15,7 +15,8 @@ class IndexController extends Controller
      */
     public function actionIndex()
     {
-        $this->assign('name', 'Hello World!');
+        $this->assign('title', 'Hello World!');
+        $this->assign(['name' => 'mxPHP']);
         $this->display();
     }
 

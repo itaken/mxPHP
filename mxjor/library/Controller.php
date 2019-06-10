@@ -46,13 +46,19 @@ abstract class Controller
     /**
      * 视图 数据收集
      *
-     * @param string $name
+     * @param string|array $name
      * @param mixed $data
      * @return void
      */
-    protected function assign(string $name, $data): void
+    protected function assign($name, $data = null): void
     {
-        $this->mxData[$name] = $data;
+        if (!empty($name)) {
+            if (is_array($name)) {
+                $this->mxData = array_merge($this->mxData, $name);
+            } else {
+                $this->mxData[$name] = $data;
+            }
+        }
     }
 
     /**
