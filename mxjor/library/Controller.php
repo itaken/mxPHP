@@ -34,7 +34,8 @@ abstract class Controller
     public function __construct()
     {
         // 加载模板引擎
-        $loader = new \Twig\Loader\FilesystemLoader(ITAKEN_MX_TPL);
+        $tplRoot = MxPHP::config('TPL_ROOT') ?: ITAKEN_MX_TPL;
+        $loader = new \Twig\Loader\FilesystemLoader($tplRoot);
         $this->mxTwig = new \Twig\Environment($loader, [
             // 'cache' => ITAKEN_MX_CACHE,  // 缓存
             'debug' => ITAKEN_MX_DEBUG,  // 调试选项
@@ -65,17 +66,18 @@ abstract class Controller
      * 输出视图
      * @see https://github.com/twigphp/Twig
      *
-     * @param array $data
-     * @param string $file
+     * @param array $data 传递参数
+     * @param string $file 试图文件(支持 .html 后缀)
      * @return void
      */
     protected function display(array $data = [], string $file = ''): void
     {
+        $tplSuffix = MxPHP::config('TPL_SUFFIX');
         if (empty($file)) {
             $params = MxPHP::getScopeParams();  // 作用域
-            $file = $params['viewPath'] . '.html';
-        } elseif (strrpos($file, '.html') !== 0) {
-            $file .= '.html';
+            $file = $params['viewPath'] . $tplSuffix;
+        } elseif (strrchr($file, $tplSuffix) !== $tplSuffix) {
+            $file .= $tplSuffix;
         }
         $this->mxTwig->display($file, array_merge($this->mxData, $data));  // 输出模板
         $this->mxData = [];  // 清空数据

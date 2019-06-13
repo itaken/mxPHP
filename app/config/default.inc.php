@@ -21,6 +21,10 @@ return [
     'TBL_SUFFIX' => '_tbl', // 表后缀
     'TBL_SPLIT' => '_', // 表名称分割符
 
+    // 模板
+    'TPL_ROOT' => '',   // 模板路径
+    'TPL_SUFFIX' => '.html', // 模板后缀
+
     // TODO::Mongo 连接
 
     // TODO::redis 连接

@@ -38,7 +38,6 @@ class Route
      * 构造器
      *
      * @param string $module
-     * @return void
      */
     public function __construct(string $module)
     {
@@ -55,7 +54,7 @@ class Route
         for ($i = 0; $i < $pathNum; $i ++) {
             $_name = \strtolower(trim($pathsArr[$i]));
             if (!\preg_match('/[a-zA-z]+(\w-)*/', $_name)) {
-                throw new \Exception('没有该页面!', 404);
+                throw new MxException('没有该页面!', 404);
             }
             if ($i == $pathNum - 1) {
                 $action = $_name;

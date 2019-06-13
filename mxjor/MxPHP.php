@@ -152,20 +152,20 @@ class MxPHP
     public static function config($name, $value = null)
     {
         $mxConfig = self::$config;
-        if (is_null($name)) {
+        if (is_null($name)) {  // 返回所有配置
             return $mxConfig;
         }
-        if ('' === $name || false === $name) {
+        if ('' === $name || false === $name) { // 没有配置项
             return false;
         }
-        if (is_array($name)) {
+        if (is_array($name)) {  // 批量 设置配置
             self::$config = array_merge($mxConfig, $name);
             return true;
         }
-        if (is_null($value)) {
+        if (is_null($value)) {  // 获取 单个配置项
             return $mxConfig[$name] ?: null;
         }
-        self::$config[$name] = $value;
+        self::$config[$name] = $value;  // 设置 单个配置项
         return true;
     }
 

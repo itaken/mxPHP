@@ -33,7 +33,7 @@ abstract class Model extends Mxdoo
     }
 
     /**
-     * 生成 表明
+     * 生成 表名
      *
      * @param string $clsName
      * @return void
