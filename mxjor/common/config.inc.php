@@ -28,11 +28,11 @@ $config = [
 ];
 
 // 获取用户配置
-$userConfig = [];
 $userConfigFile = ITAKEN_MX_MODULE . 'config/default.inc.php';
 if (file_exists($userConfigFile)) {
     $userConfig = include($userConfigFile) ?: [];
+    $config && $config = array_merge($config, $userConfig);
 }
 
-// 返回配置
-MxPHP::config(array_merge($config, $userConfig));
+// 初始化配置
+MxPHP::config($config);

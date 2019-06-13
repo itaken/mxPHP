@@ -42,8 +42,9 @@ abstract class Model extends Mxdoo
     {
         if (empty($this->tblName)) {
             $modelEpl = explode('\\', $clsName);  // 分割调用类
-            if ('_' === MxPHP::config('TBL_SPLIT')) {
-                $modelSplit = preg_split('/(?=[A-Z])/', end($modelEpl)); // 分割model名
+            $modelName = end($modelEpl);
+            if ('_' === MxPHP::config('TBL_SPLIT')) {  // 数据表 分割符
+                $modelSplit = preg_split('/(?=[A-Z])/', $modelName); // 分割model名
                 $tblNameArr = [];
                 foreach ($modelSplit as $split) {
                     if (empty($split) || in_array($split, ['model', 'Model'])) {
@@ -53,7 +54,7 @@ abstract class Model extends Mxdoo
                 }
                 $tblName = implode('_', $tblNameArr);
             } else {
-                $tblName = str_replace('Model', '', end($modelEpl));
+                $tblName = str_replace('Model', '', $modelName);
             }
             // 组装 表名称
             $this->tblName = MxPHP::config('TBL_PREFIX') . $tblName . MxPHP::config('TBL_SUFFIX');

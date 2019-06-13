@@ -1,24 +1,24 @@
 {
     "name": "mxPHP",
-    "version": "1.0.0",
-    "description": "an sample PHP framework",
+    "description": "An sample PHP framework",
     "keywords": ["PHP", "Framework", "mxPHP", "itaken"],
-    "type": "Framework",
+    "type": "framework",
+    "version": "1.0.0",
     "authors": [
         {
             "name": "itaken",
             "email": "regelhh@gmail.com",
             "homepage": "https://github.com/itaken",
-            "role": "Developer"
+            "role": "Maintainer"
         }
     ],
     "require": {
         "php": ">=7.0.8",
         "filp/whoops": "^2.3",
-        "monolog/monolog": "^1.24",
         "doctrine/orm": "^2.5.14",
         "catfan/medoo": "~1.6",
-        "twig/twig": "^2.6"
+        "twig/twig": "~2.6",
+        "guzzlehttp/guzzle": "~6.3"
     },
     "require-dev": {
         "symfony/var-dumper": "~3.4",
@@ -38,8 +38,16 @@
             "": "tests/"
         }
     },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packagist.org"
+        }
+    ],
     "license": "MIT",
+    "homepage" : "https://github.com/itaken/mxPHP",
     "support": {
-        "email": "regelhh@gmail.com"
+        "email": "regelhh@gmail.com",
+        "source": "https://github.com/itaken/mxPHP"
     }
 }

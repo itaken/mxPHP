@@ -7,6 +7,11 @@ use mxjor\routes\Route;
 defined('ITAKEN_MX_DEBUG') || define('ITAKEN_MX_DEBUG', false);
 defined('ITAKEN_MX_ROOT') || define('ITAKEN_MX_ROOT', dirname(__DIR__) . '/');
 
+// 开启调试模式
+if (true === ITAKEN_MX_DEBUG) {
+    ini_set('display_errors', 'On');
+    error_reporting(E_ALL ^ E_NOTICE);
+}
 /**
  * 框架主入口
  *
@@ -65,15 +70,10 @@ class MxPHP
     private static function mxWhoops(): void
     {
         if (true === ITAKEN_MX_DEBUG) { // 开启调试模式
-            ini_set('display_errors', 'On');
-            error_reporting(E_ALL);
-
             // 加载调试类库
-            if (class_exists('Whoops\Run')) {
-                $whoops = new \Whoops\Run;
-                $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
-                $whoops->register();
-            }
+            $whoops = new \Whoops\Run;
+            $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+            $whoops->register();
         }
     }
 
